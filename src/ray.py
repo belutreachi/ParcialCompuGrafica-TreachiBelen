@@ -9,6 +9,7 @@ class Ray:
     @property
     def origin(self) -> glm.vec3:
         return self.__origin
+    
     @property
     def direction(self) -> glm.vec3:
         return self.__direction

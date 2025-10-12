@@ -7,9 +7,11 @@ class Vertex:
     @property
     def name(self):
         return self.__name
+    
     @property
     def format(self):
         return self.__format
+    
     @property
     def array(self):
         return self.__array
@@ -26,8 +28,13 @@ class VertexLayout:
 
 class Model:
     def __init__(self, vertices = None, indices = None, colors = None, normals = None, texcoords = None):
+        self.vertices = vertices
         self.indices = indices
+        self.colors = colors
+        self.normals = normals
+        self.texcoords = texcoords
         self.vertex_layout = VertexLayout()
+        
         if vertices is not None:
             self.vertex_layout.add_attribute("in_pos", "3f", vertices)
         if colors is not None:

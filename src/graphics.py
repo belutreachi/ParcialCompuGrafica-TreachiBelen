@@ -1,3 +1,6 @@
+import numpy as np
+import glm
+
 class Graphics:
     def __init__(self, ctx, model, material):
         self.__ctx = ctx
@@ -32,6 +35,9 @@ class Graphics:
                 textures[texture.name] = (texture, texture_ctx)
         return textures
     
+    def bind_to_image(self, name = "u_texture", unit = 0, read = False, wite = True):
+        self.__textures[name][1].bind_to_image(unit, read, wite)
+    
     def render(self, uniforms):
         for name, value in uniforms.items():
             if name in self.__material.shader_program.prog:
@@ -50,3 +56,34 @@ class Graphics:
         texture_obj, texture_ctx = self.__textures[texture_name]
         texture_obj.update_data(new_data)
         texture_ctx.write(texture_obj.get_bytes())
+
+class ComputeGraphics(Graphics):
+    def __init__(self, ctx, model, material):
+        self.__ctx = ctx
+        self.__model = model
+        self.__material = material
+        self.textures = material.textures_data
+        super().__init__(ctx, model, material)
+    
+    def create_primitive(self, primitives):
+        amin, amax = self.__model.aabb
+        primitives.append({"aabb_min": amin, "aabb_max": amax})
+
+    def create_transformation_matrix(self, transformations_matrix, index):
+        m = self.__model.get_model_matrix()
+        transformations_matrix[index, :] = np.array(m.to_list(), dtype="f4").reshape(16)
+    
+    def create_inverse_transformation_matrix(self, inverse_transformations_matrix, index):
+        m = self.__model.get_model_matrix()
+        inverse = glm.inverse(m)
+        inverse_transformations_matrix[index, :] = np.array(inverse.to_list(), dtype="f4").reshape(16)
+    
+    def create_material_matrix(self, materials_matrix, index):
+        reflectivity = self.__material.reflectivity
+        r,g,b = self.__material.colorRGB
+
+        r = r / 255.0 if r > 1.0 else r
+        g = g / 255.0 if g > 1.0 else g
+        b = b / 255.0 if b > 1.0 else b
+
+        materials_matrix[index, :] = np.array([r, g, b, reflectivity], dtype="f4")

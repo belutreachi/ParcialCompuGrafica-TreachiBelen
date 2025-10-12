@@ -20,6 +20,8 @@ class Hit:
         return glm.vec3(glm.length(glm.vec3(m[0])), glm.length(glm.vec3(m[1])), glm.length(glm.vec3(m[2])))
     
     def check_hit(self, origin, direction):
+        if not self.hittable:
+            return False
         raise NotImplementedError("Subclasses should implement this method.")
 
 class HitBox(Hit):
@@ -27,14 +29,13 @@ class HitBox(Hit):
         super().__init__(get_model_matrix, hittable)
 
     def check_hit(self, origin, direction):
-        if(not self.hittable):
+        if not self.hittable:
             return False
-        
         origin = glm.vec3(origin)
         direction = glm.normalize(glm.vec3(direction))
 
-        min_bounds = self.position - self.scale
-        max_bounds = self.position + self.scale
+        min_bounds = self.position - self.scale 
+        max_bounds = self.position + self.scale 
 
         tmin = (min_bounds - origin) / direction
         tmax = (max_bounds - origin) / direction

@@ -11,7 +11,7 @@ class ImageData:
         return self.data.tobytes()
 
 class Texture:
-    def __init__(self, name = "u_texture", width = 1, height = 1, channels_amount = 3, image_data:ImageData = None, color = (0,0,0), repeat_x = False, repeat_y = False, build_mipmaps = False):
+    def __init__(self, name = "u_texture", width = 1, height = 1, channels_amount = 3, image_data: ImageData = None, color = (0,0,0), repeat_x = False, repeat_y = False, build_mipmaps = False):
         self.name = name
         self.size = (width, height)
         self.channels_amount = channels_amount

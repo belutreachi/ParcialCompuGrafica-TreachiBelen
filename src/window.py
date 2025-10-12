@@ -6,21 +6,10 @@ class Window(pyglet.window.Window):
         super().__init__(width, height, title, resizable=True)
         self.ctx = moderngl.create_context()
         self.scene = None
-        # <- agrega este scheduler:
-        pyglet.clock.schedule_interval(self._update, 1/60)
 
     def set_scene(self, scene):
         self.scene = scene
         scene.start()
-
-    def _update(self, dt):
-        if self.scene:
-            self.scene.update(dt)
-
-    def on_draw(self):  # se ejecuta por cada frame
-        self.clear()
-        if self.scene:
-            self.scene.render()
     
     def on_mouse_press(self, x, y, button, modifiers):
         if self.scene is None:
@@ -31,6 +20,13 @@ class Window(pyglet.window.Window):
         v = y / self.height
 
         self.scene.on_mouse_click(u, v)
+
+    def on_draw(self):  # se ejecuta por cada frame
+        self.clear()
+        self.ctx.clear()
+        self.ctx.enable(moderngl.DEPTH_TEST)
+        if self.scene:
+            self.scene.render()
 
     def on_resize(self, width, height):
         if self.scene:
