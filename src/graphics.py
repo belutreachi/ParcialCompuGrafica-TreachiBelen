@@ -35,8 +35,8 @@ class Graphics:
                 textures[texture.name] = (texture, texture_ctx)
         return textures
     
-    def bind_to_image(self, name = "u_texture", unit = 0, read = False, wite = True):
-        self.__textures[name][1].bind_to_image(unit, read, wite)
+    def bind_to_image(self, name = "u_texture", unit = 0, read = False, write = True):
+        self.__textures[name][1].bind_to_image(unit, read, write)
     
     def render(self, uniforms):
         for name, value in uniforms.items():

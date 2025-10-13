@@ -16,7 +16,7 @@ SHADERS = HERE.parent / "shaders"           # .../TP4/shaders
 
 WIDTH, HEIGHT = 800, 600
 
-SCENE_TYPE = "cpu" # Opciones: "normal", "cpu", "gpu"
+SCENE_TYPE = "gpu" # Opciones: "normal", "cpu", "gpu"
 
 scene_configs = {
     "normal": {
@@ -62,8 +62,12 @@ cube2 = Cube((2, 0, 2), (0, 45, 0), (1, 1, 1), name="Cube2")
 quad = Quad((0, -2, 0), (-90, 0, 0), (10, 15, 1), name="Floor", animated=False)
 sprite = Quad((0, 0, 0), (0, 0, 0), (6, 5, 1), name="Sprite", animated=False, hittable = False)
 
+cube1gpu = Cube((-2, 2, 5), (0, 0, 0), (1, 1, 1), name="Cube1", animated=True)
+cube2gpu = Cube((2, 2, 5), (0, 0, 0), (1, 1, 1), name="Cube2", animated=True)
+
 # Cámara
 camera = Camera((0, 0, 10), (0, 0, 0), (0, 1, 0), 45, WIDTH / HEIGHT, 0.01, 100.0)
+cameraGPU = Camera((0, 1, 20), (0, 0, 0), (0, 1, 0), 45, WIDTH / HEIGHT, 0.01, 100.0)
 camera.set_sky_colors(top=(16, 150, 222), bottom=(181, 224, 247))
 
 if SCENE_TYPE == "normal":
@@ -79,9 +83,9 @@ elif SCENE_TYPE == "cpu":
     scene.add_object(quad, material_ceramic)
 
 elif SCENE_TYPE == "gpu":
-    scene = RaySceneGPU(window.ctx, camera, WIDTH, HEIGHT, sprite, material_sprite)
-    scene.add_object(cube1, material_plastic)
-    scene.add_object(cube2, material_glass)
+    scene = RaySceneGPU(window.ctx, cameraGPU, WIDTH, HEIGHT, sprite, material_sprite)
+    scene.add_object(cube1gpu, material_plastic)
+    scene.add_object(cube2gpu, material_glass)
     scene.add_object(quad, material_ceramic)
 
 # Carga de la escena y ejecución del loop principal

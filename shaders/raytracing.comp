@@ -183,7 +183,7 @@ void main(){
             rayDirection = reflect(rayDirection, hit.normal);
 
         } else {
-            float t = 0.5 * (rayDirection + 1.0);
+            float t = 0.5 * (rayDirection.y + 1.0);
             vec3 skyTop = vec3(16.0/255.0, 150.0/255.0, 222.0/255.0);
             vec3 skyBottom = vec3(181.0/255.0, 224.0/255.0, 247.0/255.0);
             accumulatedColor += rayThroughput * mix(skyBottom, skyTop, t);
