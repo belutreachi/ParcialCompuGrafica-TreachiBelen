@@ -68,7 +68,7 @@ class BVH:
 
         recurse(indices)
 
-    def pack_to_bytes(self):
+    def pack_to_bytes(self): # transforma el árbol en un arreglo lineal de floats
         floats = []
         for node in self.nodes:
             floats.extend(node.pack())

@@ -3,7 +3,7 @@ import glm
 class Hit:
     def __init__(self, get_model_matrix, hittable = True):
         self.__model_matrix = get_model_matrix
-        self.hittable = hittable
+        self.hittable = hittable # para controlar con qué objetos se puede colisionar
 
     @property
     def model_matrix(self):
@@ -19,8 +19,8 @@ class Hit:
         m = self.model_matrix
         return glm.vec3(glm.length(glm.vec3(m[0])), glm.length(glm.vec3(m[1])), glm.length(glm.vec3(m[2])))
     
-    def check_hit(self, origin, direction):
-        if not self.hittable:
+    def check_hit(self, origin, direction): # comprueba si un rayo colisiona con el objeto
+        if not self.hittable: # primero se debe verificar si hittable es True
             return False
         raise NotImplementedError("Subclasses should implement this method.")
 

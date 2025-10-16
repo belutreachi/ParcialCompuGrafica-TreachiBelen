@@ -16,7 +16,7 @@ SHADERS = HERE.parent / "shaders"           # .../TP4/shaders
 
 WIDTH, HEIGHT = 800, 600
 
-SCENE_TYPE = "gpu" # Opciones: "normal", "cpu", "gpu"
+SCENE_TYPE = "normal" # Opciones: "normal", "cpu", "gpu"
 
 scene_configs = {
     "normal": {
@@ -57,16 +57,16 @@ material_ceramic = StandardMaterial(shader, albedo_pearl, reflectivity=0.1)
 material_sprite = Material(shader_sprite, textures_data=[sprite_texture])
 
 #Objetos
-cube1 = Cube((-2, 0, 2), (0, 45, 0), (1, 1, 1), name="Cube1")
+cube1 = Cube((-2, 0, 2), (0, 45, 0), (1, 1, 1), name="Cube1") # (pos, rot, scale)
 cube2 = Cube((2, 0, 2), (0, 45, 0), (1, 1, 1), name="Cube2")
 quad = Quad((0, -2, 0), (-90, 0, 0), (10, 15, 1), name="Floor", animated=False)
-sprite = Quad((0, 0, 0), (0, 0, 0), (6, 5, 1), name="Sprite", animated=False, hittable = False)
+sprite = Quad((0, 0, 0), (0, 0, 0), (6, 5, 1), name="Sprite", animated=False, hittable = False) # hittable = False para que el rayo no colisione con él
 
 cube1gpu = Cube((-2, 2, 5), (0, 0, 0), (1, 1, 1), name="Cube1", animated=True)
 cube2gpu = Cube((2, 2, 5), (0, 0, 0), (1, 1, 1), name="Cube2", animated=True)
 
 # Cámara
-camera = Camera((0, 0, 10), (0, 0, 0), (0, 1, 0), 45, WIDTH / HEIGHT, 0.01, 100.0)
+camera = Camera((0, 0, 10), (0, 0, 0), (0, 1, 0), 45, WIDTH / HEIGHT, 0.01, 100.0) # (pos, target, up, fov, aspect, near, far)
 cameraGPU = Camera((0, 1, 20), (0, 0, 0), (0, 1, 0), 45, WIDTH / HEIGHT, 0.01, 100.0)
 camera.set_sky_colors(top=(16, 150, 222), bottom=(181, 224, 247))
 

@@ -63,7 +63,7 @@ class Quad(Model):
     def check_hit(self, origin, direction):
         return self.__colision.check_hit(origin, direction)
     
-    def get_model_matrix(self):
+    def get_model_matrix(self): # matriz de transformación
         model = glm.mat4(1)
         model = glm.translate(model, self.position)
         model = glm.rotate(model, glm.radians(self.rotation.x % 360), glm.vec3(1, 0, 0))

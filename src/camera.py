@@ -10,24 +10,24 @@ class Camera:
         self.aspect = aspect
         self.near     = near
         self.far      = far
-        self.__sky_color_top = None
-        self.__sky_color_bottom = None
+        self.__sky_color_top = None # color superior del cielo para el gradiente
+        self.__sky_color_bottom = None # color inferior del cielo para el gradiente
     
-    def set_sky_colors(self, top, bottom):
+    def set_sky_colors(self, top, bottom): # se asignan los colores del cielo y transforma las tuplas dadas a glm.vec3
         self.__sky_color_top = glm.vec3(*top)
         self.__sky_color_bottom = glm.vec3(*bottom)
     
-    def get_sky_gradient(self, height):
-        point = pow(0.5 * (height + 1.0), 1.5)
+    def get_sky_gradient(self, height): # devuelve un color interpolado en funcion de la altura
+        point = pow(0.5 * (height + 1.0), 1.5) # suaviza la transicion entre ambos extremos: degradado más natural
         return (1.0 - point) * self.__sky_color_bottom + point * self.__sky_color_top
 
-    def get_perspective_matrix(self):
+    def get_perspective_matrix(self): # matriz de transformación de perspectiva
         return glm.perspective(glm.radians(self.fov), self.aspect, self.near, self.far)
     
-    def get_view_matrix(self):
+    def get_view_matrix(self): # matriz de transformación de vista
         return glm.lookAt(self.position, self.target, self.up)
     
-    def get_inverse_view_matrix(self):
+    def get_inverse_view_matrix(self): # matriz de transformación de vista inversa
         return glm.inverse(self.get_view_matrix())
     
     def raycast(self, u, v):

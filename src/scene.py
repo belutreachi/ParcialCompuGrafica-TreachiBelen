@@ -20,8 +20,8 @@ class Scene:
         self.objects.append(obj)
         self.graphics[obj.name] = Graphics(self.ctx, obj, material)
     
-    def start(self):
-        print("Start!")
+    def start(self): # se ejecuta cuando la escena esté cargada en la ventana
+        print("Start!") # para verificar que se ejecuta correctamente
 
     def render(self):
         self.time += 0.01
@@ -43,26 +43,26 @@ class Scene:
 
     def on_resize(self, width, height):
         self.ctx.viewport = (0, 0, width, height)
-        self.camera.aspect = width / height
+        self.camera.aspect = width / height 
         self.projection = self.camera.get_perspective_matrix()
 
-class RayScene(Scene):
-    def __init__(self, ctx, camera, width, height):
+class RayScene(Scene): # extiende la funcionalidad de la escena base para que soporte raytracing utilizando un framebuffer
+    def __init__(self, ctx, camera, width, height): # ancho y alto sirven para crear el framebuffer
         super().__init__(ctx, camera)
-        self.raytracer = RayTracer(camera, width, height)
+        self.raytracer = RayTracer(camera, width, height) 
     
-    def start(self):
-        self.raytracer.render_frame(self.objects)
-        if "Sprite" in self.graphics:
+    def start(self): 
+        self.raytracer.render_frame(self.objects) # le pasamos a render_frame la lista de objetos de la escena
+        if "Sprite" in self.graphics: # buscamos el objeto Sprite y actualizamos su textura con el contenido del framebuffer
             self.graphics["Sprite"].update_texture("u_texture", self.raytracer.get_texture())
 
     def render(self):
         super().render()
     
-    def on_resize(self, width, height):
-        super().on_resize(width, height)
+    def on_resize(self, width, height): 
+        super().on_resize(width, height) # ajustamos el framebuffer al nuevo tamaño de pantalla
         self.raytracer = RayTracer(self.camera, width, height)
-        self.start()
+        self.start() # redibujamos el buffer con las dimensiones correctas
 
 class RaySceneGPU(Scene):
     def __init__(self, ctx, camera, width, height, output_model, output_material):
