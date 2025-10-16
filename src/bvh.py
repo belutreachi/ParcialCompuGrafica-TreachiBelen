@@ -1,6 +1,6 @@
 import numpy as np
 
-class BVHNode:
+class BVHNode: # nodo en el árbol BVH
     def __init__(self, aabb_min=(0,0,0), aabb_max=(0,0,0), left=-1, right=-1, prim_start=-1, prim_count=0):
         self.aabb_min = tuple(aabb_min)
         self.aabb_max = tuple(aabb_max)

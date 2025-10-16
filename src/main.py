@@ -16,7 +16,7 @@ SHADERS = HERE.parent / "shaders"           # .../TP4/shaders
 
 WIDTH, HEIGHT = 800, 600
 
-SCENE_TYPE = "normal" # Opciones: "normal", "cpu", "gpu"
+SCENE_TYPE = "gpu" # Opciones: "normal", "cpu", "gpu"
 
 scene_configs = {
     "normal": {
@@ -76,10 +76,10 @@ if SCENE_TYPE == "normal":
     scene.add_object(cube2, material_glass)
 
 elif SCENE_TYPE == "cpu":
-    scene = RayScene(window.ctx, camera, WIDTH, HEIGHT)
+    scene = RayScene(window.ctx, cameraGPU, WIDTH, HEIGHT)
     scene.add_object(sprite, material_sprite)
-    scene.add_object(cube1, material_plastic)
-    scene.add_object(cube2, material_glass)
+    scene.add_object(cube1gpu, material_plastic)
+    scene.add_object(cube2gpu, material_glass)
     scene.add_object(quad, material_ceramic)
 
 elif SCENE_TYPE == "gpu":
